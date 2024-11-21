@@ -3,6 +3,7 @@ package com.rajkanani.esd_yummyapp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 
+
 public record LoginRequest(
         @NotNull(message="Customer email is required")
         @Email(message = "Email must be in correct format")

@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 public record ProductRequest (
 
 
-
         @NotNull(message = "Name should be present")
         @NotEmpty(message = "Name should be present")
         @NotBlank(message = "Name should be present")
