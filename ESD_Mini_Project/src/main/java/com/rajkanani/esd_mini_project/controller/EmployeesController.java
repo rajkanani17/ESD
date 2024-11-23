@@ -7,6 +7,7 @@ import com.rajkanani.esd_mini_project.model.Employees;
 import com.rajkanani.esd_mini_project.model.Students;
 import com.rajkanani.esd_mini_project.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,9 +39,9 @@ public class EmployeesController {
         return employeesService.assignStudents(request, course_ta_id);
     }
 
-
+    // fetch students who applied for course_id
     @GetMapping("/getstudents/{course_id}")
-    public List<CourseTA> getStudentsRegisterTA(@PathVariable long course_id) {
+    public List<Students> getStudentsRegisterTA(@PathVariable Long course_id) {
         return employeesService.getStudentsByRegisterTA(course_id);
     }
 
@@ -48,4 +49,9 @@ public class EmployeesController {
     public Employees createEmployee(@RequestBody Employees employees) {
         return employeesService.createEmployee(employees);
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody Employees employees) {
+//        return employeesService.login(employees);
+//    }
 }

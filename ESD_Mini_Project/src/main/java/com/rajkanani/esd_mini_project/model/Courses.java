@@ -26,6 +26,6 @@ public class Courses {
 //    @ManyToOne
 //    @JoinColumn(name = "emp_id", nullable = false)
     @Column(name = "emp_id")
-    private long empId;
+    private Long empId;
 
 }

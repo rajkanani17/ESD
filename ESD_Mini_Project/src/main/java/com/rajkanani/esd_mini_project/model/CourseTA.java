@@ -18,12 +18,12 @@ public class CourseTA {
     private Long id;
 
     @Column(name = "course_id",nullable = false)
-    private long courseId;
+    private Long courseId;
 
     @Column(name = "stud_id", nullable = false)
-    private long studId;
+    private Long studId;
 
     @Column(name = "approved",nullable = false)
-    private boolean approved;
+    private int approved;
 
 }

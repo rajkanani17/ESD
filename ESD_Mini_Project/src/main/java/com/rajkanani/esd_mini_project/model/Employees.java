@@ -27,6 +27,9 @@ public class Employees {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     private String department;
     private String title;
     private String photograph;

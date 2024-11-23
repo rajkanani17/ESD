@@ -4,6 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record assignStudentsRequest(
         @JsonProperty("approved")
-        boolean approved
+        int approved
 ) {
 }

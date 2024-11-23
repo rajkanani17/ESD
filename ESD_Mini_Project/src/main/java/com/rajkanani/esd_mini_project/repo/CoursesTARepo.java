@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface CoursesTARepo extends JpaRepository<CourseTA, Long> {
 
-    @Query("SELECT p FROM CourseTA as p WHERE p.courseId=:courseId AND p.approved=false")
-    List<CourseTA> findByCourseId(long courseId);
+    @Query("SELECT p FROM CourseTA as p WHERE p.courseId=:courseId AND p.approved=0")
+    List<CourseTA> findByCourseId(Long courseId);
 }
