@@ -51,7 +51,8 @@ public class EmployeesService {
             List<CourseTA> cta =  coursesTARepo.findByCourseCode(courseId);
             List<Students> students = new ArrayList<>();
             for(CourseTA courseTA : cta) {
-                students.add(studentsRepo.findById(courseTA.getStudId()).orElse(null));
+                studentsRepo.findById(courseTA.getStudId()).ifPresent(students::add);
+//                students.add(studentsRepo.findById(courseTA.getStudId()).orElse(null));
             }
 
             return students;

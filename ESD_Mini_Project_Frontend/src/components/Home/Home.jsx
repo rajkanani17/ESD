@@ -1,62 +1,59 @@
+import { data } from "autoprefixer";
 import React from "react";
 import { useState } from "react";
 import { useNavigate} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 function Home(){
   
    // login validation
+   const [data, setData] = useState({})
    const [email,setEmail] = useState("")
    const [password,setPassword]=useState("")
    const usenavigate=useNavigate()
-  
    const login = async (e) => {
     e.preventDefault();
-
-    if (validate()) {
-        const response = await fetch("http://localhost:8080/api/home/authenticate", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({   
-            email:email,
-            password:password,
-          }),
-        }).then(response => response.json());
-
-        
-        if (response.department) {
-          console.log("Authentication failed: Invalid email or password");
-          toast.error('Invalid email or password');
-
-          // Handle successful login
-        } else if (!response.department) {
-
-          console.log("Authentication successful");
-          toast.success("Login successful by "+ response.emp_id)
-          const facultyId = response.emp_id
-          console.log(response)
-          usenavigate(`/dashboard/${facultyId}`)
-        } else {
-          console.log("Authentication failed: Something went wrong");
-          toast.error('Authentication failed. Please try again later.');
-        }
+  
+    try {
+      // Replace email and password with your state or variable
+      const response = await axios.post("http://localhost:8080/api/home/authenticate", {
+        email: email,
+        password: password,
+      });
+  
+      const data = response.data;
+  
+      if (data?.photograph) {
+        console.log("Authentication failed: Invalid email or password");
+        toast.error('Authentication failed. Please try again later.');
+      } else {
+        console.log("Authentication successful");
+        const facultyId = data.emp_id;
+        console.log(data);
+        console.log(facultyId);
+        console.log(data.email);
+  
+        usenavigate(`/dashboard/${facultyId}`);
+      }
+    } catch (error) {
+      console.error("Authentication failed: Something went wrong", error);
+      toast.error('Authentication failed. Please try again later.');
     }
   };
-   const validate=()=>{
-    let result = true
-    if(email==='' || email===null){
-      result= false;
-      toast.warning('please enter email')
-    }
-    if(password==='' || password===null){
-      result = false;
-      toast.warning('please enter password')
-    }
-    return result
-   }
+  //  const validate=()=>{
+  //   let result = true
+  //   if(email==='' || email===null){
+  //     result= false;
+  //     toast.warning('please enter email')
+  //   }
+  //   if(password==='' || password===null){
+  //     result = false;
+  //     toast.warning('please enter password')
+  //   }
+  //   return result
+  //  }
       
      
     return(

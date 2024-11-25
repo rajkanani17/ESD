@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5174")
 @RequestMapping("/api/home")
 public class AuthenticateController {
 
@@ -19,14 +19,15 @@ public class AuthenticateController {
     private EmployeesService employeesService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<Employees> authenticate(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<Employees> authenticate(@RequestBody LoginRequest loginRequest) throws Exception{
+//        System.out.println("Login ......");
         try{
             Employees employee = employeesService.authenticate(loginRequest);
             return ResponseEntity.status(200).body(employee);
 //        }catch (Exception ex){
 //            return ResponseEntity.badRequest().body(ex.getMessage());
         }catch (Exception e){
-            return null;
+            throw new Exception("authetication failed");
         }
     }
 }

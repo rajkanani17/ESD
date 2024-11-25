@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5174")
 @RequestMapping("api/v1/courses")
 public class CoursesController {
     @Autowired

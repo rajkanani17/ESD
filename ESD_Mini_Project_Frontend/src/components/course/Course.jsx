@@ -13,34 +13,38 @@ function Course() {
         console.log(courseId);
         console.log(studId);
         event.preventDefault();
+        setStudId('');
       
         // Assuming you have the faculty code and course code from the URL parameters
-        const data = {
-          courseCode: courseId,
-          studId: studId,
-          approved: 1
-        };
-      
-        // Send a POST request to the endpoint
-        fetch('http://localhost:8080/api/v1/assignstudent', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => {
-              if (response.ok) {
-                // Handle success, maybe show a message or perform other actions
-                console.log('Add TA successful');
-              } else {
-                // Handle errors or non-OK status codes
-                console.error('Add TA failed with status:', response.status);
-              }
+        if(studId!=''){
+          const data = {
+            courseCode: courseId,
+            studId: studId,
+            approved: 1
+          };
+        console.log("hiiiiiiiiiiiiiiiii")
+          // Send a POST request to the endpoint
+          fetch('http://localhost:8080/api/v1/assignstudent', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
             })
-            .catch((error) => {
-              console.error('Add TA error:', error);
-            });
+              .then((response) => {
+                if (response.ok) {
+                  // Handle success, maybe show a message or perform other actions
+                  console.log('Add TA successful');
+                } else {
+                  // Handle errors or non-OK status codes
+                  console.error('Add TA failed with status:', response.status);
+                }
+              })
+              .catch((error) => {
+                console.error('Add TA error:', error);
+              });
+          
+        }
         
       }
       

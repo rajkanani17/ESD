@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ function TaList() {
       .then((data) => {
         console.log('Fetched course data:', data);
         setCourseList(data);
-        console.log(courseId);
+        console.log(data);
       })
       .catch((error) => {
         console.error('Fetch course error:', error);
@@ -36,11 +37,12 @@ function TaList() {
             <tbody>
               {Array.isArray(courseList) && courseList.length > 0 ? (
                 courseList.map((ta, index) => (
+                  
                   <tr key={index} className="border-t">
-                    <td className="py-2 px-4 border">{ta.roll_no}</td>
-                    <td className="py-2 px-4 border">{ta.first_name}</td>
-                    <td className="py-2 px-4 border">{ta.last_name}</td>
-                    <td className="py-2 px-4 border">{ta.email}</td>
+                    <td className="py-2 px-4 border">{ta.roll_no?ta.roll_no:'Not available'}</td>
+                    <td className="py-2 px-4 border">{ta.first_name?ta.first_name:'Not Available'}</td>
+                    <td className="py-2 px-4 border">{ta.last_name?ta.last_name:'Not Available'}</td>
+                    <td className="py-2 px-4 border">{ta.email?ta.email:'Not Available'}</td>
                   </tr>
                 ))
               ) : (
