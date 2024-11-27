@@ -24,7 +24,7 @@ function Course() {
           };
         console.log("hiiiiiiiiiiiiiiiii")
           // Send a POST request to the endpoint
-          fetch('http://localhost:8080/api/v1/assignstudent', {
+          fetch('http://localhost:8080/api/v1/employees/assignstudent', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -32,14 +32,32 @@ function Course() {
               body: JSON.stringify(data),
             })
               .then((response) => {
-                if (response.ok) {
-                  // Handle success, maybe show a message or perform other actions
-                  console.log('Add TA successful');
-                } else {
-                  // Handle errors or non-OK status codes
-                  console.error('Add TA failed with status:', response.status);
+                if(response.ok){
+                  //Success
+                  alert('Student assigend as TA Successfully');
+                }
+                else if(response.status === 404){
+                  // Not found Student
+                  alert('Student does not exits');
+                }
+                else if(response.status === 500){
+                  // Already Assigned
+                  alert('Student is already assigned as TA');
+                }
+                else{
+                  // General case
+                  alert('An error occured while assigning the TA');
                 }
               })
+              // .then((response) => {
+              //   if (response.ok) {
+              //     // Handle success, maybe show a message or perform other actions
+              //     console.log('Add TA successful');
+              //   } else {
+              //     // Handle errors or non-OK status codes
+              //     console.error('Add TA failed with status:', response.status);
+              //   }
+              // })
               .catch((error) => {
                 console.error('Add TA error:', error);
               });

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,18 +61,36 @@ public class EmployeesService {
         return new ArrayList<>();
     }
 
-    public String assignStudents(assignStudentsRequest request, long courseTaId) {
-        CourseTA courseTA = coursesTARepo.findById(courseTaId).orElse(null);
+    public String assignStudents(assignStudentsRequest request) {
+//        CourseTA courseTA = coursesTARepo.findById(courseTaId).orElse(null);
+//
+//        if(courseTA == null) {
+//            coursesTARepo.save(courseTA);
+//            return "Assigned";
+//        }
+//        return "Already Assigned";
+        
+        Long studId = request.studId();
+        String courseCode = request.courseCode();
+        int approved = request.approved();
 
-        if(request.approved() == 1){
-            courseTA.setApproved(1); // approved
+        Optional<Students> stud = studentsRepo.findById(studId);
+        if(!stud.isPresent()) {
+            return "Student not found";
         }
-        else if(request.approved() == 2) {
-            coursesTARepo.delete(courseTA);
-            return "Rejected";
+
+        Optional<CourseTA> courseTAopt = coursesTARepo.findByCourseCodeAndStudId(courseCode, studId);
+        if(courseTAopt.isPresent()){
+            return "Already Assigned";
         }
+
+        CourseTA courseTA = new CourseTA();
+        courseTA.setCourseCode(courseCode);
+        courseTA.setStudId(studId);
+        courseTA.setApproved(approved);
         coursesTARepo.save(courseTA);
-        return "Assigned";
+
+        return "Student Assigned";
     }
 
 

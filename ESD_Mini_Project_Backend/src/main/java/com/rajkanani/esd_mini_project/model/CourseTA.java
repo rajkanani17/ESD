@@ -20,7 +20,7 @@ public class CourseTA {
     @Column(name = "course_code",nullable = false)
     private String courseCode;
 
-    @Column(name = "stud_id", nullable = false)
+    @Column(name = "stud_id", nullable = false, unique = true)
     private Long studId;
 
     @Column(name = "approved",nullable = false)

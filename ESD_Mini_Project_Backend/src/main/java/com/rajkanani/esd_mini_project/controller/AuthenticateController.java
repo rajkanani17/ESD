@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
 
 @RestController
-@CrossOrigin("http://localhost:5174")
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/home")
 public class AuthenticateController {
 

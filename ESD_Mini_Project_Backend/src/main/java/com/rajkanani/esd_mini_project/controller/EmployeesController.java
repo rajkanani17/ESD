@@ -6,13 +6,14 @@ import com.rajkanani.esd_mini_project.model.Employees;
 import com.rajkanani.esd_mini_project.model.Students;
 import com.rajkanani.esd_mini_project.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:5174")
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("api/v1/employees")
 public class EmployeesController {
 
@@ -34,9 +35,18 @@ public class EmployeesController {
         return employeesService.getCourseByEmpId(emp_id);
     }
 
-    @PutMapping("/assignstudent/{course_ta_id}")
-    public String assignStudents(@RequestBody assignStudentsRequest request, @PathVariable long course_ta_id) {
-        return employeesService.assignStudents(request, course_ta_id);
+    @PostMapping("/assignstudent")
+    public ResponseEntity<String> assignStudents(@RequestBody assignStudentsRequest request) {
+        String result = employeesService.assignStudents(request);
+        if("Student not found" == result) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        }
+        else if("Already Assigned" == result) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }
     }
 
     // fetch students who applied for course_id
