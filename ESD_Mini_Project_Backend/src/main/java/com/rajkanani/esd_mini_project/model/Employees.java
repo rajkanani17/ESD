@@ -33,4 +33,5 @@ public class Employees {
     private String department;
     private String title;
     private String photograph;
+    private String jwtToken;
 }

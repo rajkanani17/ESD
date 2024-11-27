@@ -26,8 +26,13 @@ public class EmployeesController {
     }
 
     @GetMapping("/{emp_id}")
-    public ResponseEntity<Employees> getEmployeeByEmail(@PathVariable Long emp_id) {
+    public ResponseEntity<Employees> getEmployeeByEmpID(@PathVariable Long emp_id) {
         return ResponseEntity.ok(employeesService.getEmployeeByEmpID(emp_id));
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<Employees> getEmployeeByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(employeesService.getEmployeeByEmail(email));
     }
 
     @GetMapping("/courses/{emp_id}")
@@ -55,7 +60,7 @@ public class EmployeesController {
         return employeesService.getStudentsByRegisterTA(course_code);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Employees createEmployee(@RequestBody Employees employees) {
         return employeesService.createEmployee(employees);
     }

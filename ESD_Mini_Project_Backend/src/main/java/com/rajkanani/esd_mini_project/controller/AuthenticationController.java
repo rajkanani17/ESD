@@ -1,6 +1,7 @@
 package com.rajkanani.esd_mini_project.controller;
 
 import com.rajkanani.esd_mini_project.dto.LoginRequest;
+import jakarta.validation.Valid;
 import com.rajkanani.esd_mini_project.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class AuthenticationController {
     private EmployeesService employeesService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody @Validated LoginRequest loginRequest) throws Exception{
+    public ResponseEntity<?> authenticate(@RequestBody @Valid LoginRequest loginRequest){
 ////        System.out.println("Login ......");
 //        try{
 //            Employees employee = employeesService.authenticate(loginRequest);

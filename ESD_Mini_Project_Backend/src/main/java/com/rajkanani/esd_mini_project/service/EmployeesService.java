@@ -2,6 +2,7 @@ package com.rajkanani.esd_mini_project.service;
 
 import com.rajkanani.esd_mini_project.dto.LoginRequest;
 import com.rajkanani.esd_mini_project.dto.assignStudentsRequest;
+import com.rajkanani.esd_mini_project.helper.JWTHelper;
 import com.rajkanani.esd_mini_project.model.CourseTA;
 import com.rajkanani.esd_mini_project.model.Courses;
 import com.rajkanani.esd_mini_project.model.Employees;
@@ -28,6 +29,7 @@ public class EmployeesService {
     private final StudentsRepo studentsRepo;
     private final EncryptionService encryptionService;
     private final CoursesTARepo coursesTARepo;
+    private final JWTHelper jwtHelper;
 
     public List<Employees> getAllEmployees() {
         return employeesRepo.findAll();
@@ -36,6 +38,11 @@ public class EmployeesService {
     public Employees getEmployeeByEmpID(Long emp_id) {
         return employeesRepo.findById(emp_id)
                 .orElse(null);
+    }
+
+    public Employees getEmployeeByEmail(String email) {
+        return employeesRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Email not found"));
     }
 
     public Employees createEmployee(Employees employees) {
@@ -94,15 +101,27 @@ public class EmployeesService {
     }
 
 
-    public Employees authenticate(LoginRequest loginRequest) {
-        Employees employee = employeesRepo.findByEmail(loginRequest.email())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-
+    public ResponseEntity<?> authenticate(LoginRequest loginRequest) {
+//        Employees employee = employeesRepo.findByEmail(loginRequest.email())
+//                .orElseThrow(() -> new RuntimeException("Employee not found"));
+//
+//        if(!encryptionService.validates(loginRequest.password(), employee.getPassword())) {
+//            throw new RuntimeException("Wrong password");
+//        }
+//        return employee;
+        Employees employee = getEmployeeByEmail(loginRequest.email());
         if(!encryptionService.validates(loginRequest.password(), employee.getPassword())) {
-            throw new RuntimeException("Wrong password");
+            return null;
         }
-        return employee;
+
+//        return "Authenticate Successfully";
+
+        employee.setJwtToken(jwtHelper.generateToken(loginRequest.email()));
+        return ResponseEntity.ok(employee);
     }
+
+
+
 //    public ResponseEntity<String> login(Employees employees) {
 //
 //    }
